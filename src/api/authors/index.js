@@ -25,7 +25,13 @@ authorsRouter.post("/", (req, res) => {
     id: uniqid(),
   };
 
-  res.send("Working?");
+  const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath));
+
+  authorsArray.push(newAuthors);
+
+  fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray));
+
+  res.status(201).send({ id: newAuthors.id });
 });
 
 authorsRouter.get("/", (req, res) => {
