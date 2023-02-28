@@ -26,12 +26,15 @@ authorsRouter.post("/", (req, res) => {
   };
 
   const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath));
+  //   const emailExisted = ;
 
-  authorsArray.push(newAuthors);
-
-  fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray));
-
-  res.status(201).send({ id: newAuthors.id });
+  if (authorsArray.some((author) => author.email === req.body.email)) {
+    res.send("Email existed, please change a new one");
+  } else {
+    authorsArray.push(newAuthors);
+    fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray));
+    res.status(201).send({ id: newAuthors.id });
+  }
 });
 
 authorsRouter.get("/", (req, res) => {
