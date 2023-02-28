@@ -13,8 +13,8 @@ const authorsRouter = Express.Router();
 const authorsJSONPath = join(
   dirname(fileURLToPath(import.meta.url)),
   "authors.json"
-);
-console.log("TARGET:", authorsJSONPath); //use join not +, make sure the braces placement
+); //use join not +, make sure the braces placement
+console.log("TARGET:", authorsJSONPath);
 
 //for different methods
 authorsRouter.post("/", (req, res) => {
