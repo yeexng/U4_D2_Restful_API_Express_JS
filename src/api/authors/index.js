@@ -58,7 +58,13 @@ authorsRouter.put("/:authorId", (req, res) => {
 });
 
 authorsRouter.delete("/:authorId", (req, res) => {
-  res.send("Working?");
+  const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath));
+  const remainingAuthors = authorsArray.filter(
+    (author) => author.id !== req.params.authorId
+  );
+
+  fs.writeFileSync(authorsJSONPath, JSON.stringify(remainingAuthors));
+  res.status(204).send();
 });
 
 export default authorsRouter;
